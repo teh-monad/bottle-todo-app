@@ -1,11 +1,19 @@
 # -*- coding: utf-8 -*-
 
 import sqlite3
-from bottle import route, run, debug, template, request, static_file, error
+from bottle import route, run, debug, template, request, static_file, error, redirect
 
 # only needed when you run Bottle on mod_wsgi
 from bottle import default_app
 
+@route('/')
+def main():
+    redirect("/todo")
+
+@route('/urls')
+def urls():
+	for i in ['/todo', '/new', '/edit', '/item', '/json', '/help']:
+		yield('<a href="http://localhost:8080%s"> %s </a></br>') % (i, i)
 
 @route('/todo')
 def todo_list():
