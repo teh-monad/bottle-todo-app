@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: #1abc9c;
+    font-family: 'Pacifico', cursive;
+}
+
+h1 {
+    color: white;
+}
+
+form {
+    border-bottom: 1px solid #ecf0f1;
+    padding: 1em 0;
+}
+
+tr {
+    text-align: left;
+}
+
+table, tr, td {
+    padding: 10px 10px;
+	border-color: #fc035a; 
+    border-width: 5px;
+    border-style: solid;
+    box-shadow: 7px 9px 11px rgba(0, 0, 0, 0.19);
+    margin: 2px;
+}
+
+tr > td:first-of-type {
+    font-size: 1.5em;
+    font-weight: cursive;
+}
