@@ -24,9 +24,12 @@ def todo_list():
     result = c.fetchall()
     c.close()
 
-    output = template('make_table', rows=result)
+    output = template('src/templates/make_table', rows=result, root='/src/')
     return output
 
+@route('/src/css/<filename:re:.*\.css>')
+def send_css(filename):
+    return static_file(filename, root='src/css')
 
 @route('/new', method='GET')
 def new_item():
@@ -46,7 +49,7 @@ def new_item():
         return '<p>The new task was inserted into the database, the ID is %s</p>' % new_id
 
     else:
-        return template('new_task.tpl')
+        return template('src/templates/new_task.tpl')
 
 
 @route('/edit/<no:int>', method='GET')
@@ -73,7 +76,7 @@ def edit_item(no):
         c.execute("SELECT task FROM todo WHERE id LIKE ?", (str(no)))
         cur_data = c.fetchone()
 
-        return template('edit_task', old=cur_data, no=no)
+        return template('src/templates/edit_task', old=cur_data, no=no)
 
 
 @route('/item<item:re:[0-9]+>')
@@ -94,7 +97,7 @@ def show_item(item):
 @route('/help')
 def help():
 
-    static_file('help.html', root='.')
+    static_file('src/templates/help.html', root='.')
 
 
 @route('/json<json:re:[0-9]+>')
