@@ -6,20 +6,28 @@ from bottle import route, run, debug, template, request, static_file, error, red
 # only needed when you run Bottle on mod_wsgi
 from bottle import default_app
 
+def connect(func): #func(c=None)
+    def _connect(*args,**kw):
+        con = sqlite3.connect("todo.db")
+        c = con.cursor()
+        result = func(c)
+        con.close()
+        return result
+    return _connect
+
 @route('/')
 def main():
     redirect("/todo")
 
 @route('/urls')
 def urls():
-	for i in ['/todo', '/new', '/edit', '/item', '/json', '/help']:
+	for i in ['/todo', '/new', '/edit/1', '/item/1', '/json/1', '/help']:
 		yield('<a href="http://localhost:8080%s"> %s </a></br>') % (i, i)
 
 @route('/todo')
-def todo_list():
+@connect
+def todo_list(c=None):
 
-    conn = sqlite3.connect('todo.db')
-    c = conn.cursor()
     c.execute("SELECT id, task FROM todo WHERE status LIKE '1'")
     result = c.fetchall()
     c.close()
@@ -32,13 +40,12 @@ def send_css(filename):
     return static_file(filename, root='src/css')
 
 @route('/new', method='GET')
-def new_item():
+@connect
+def new_item(c=None):
 
     if request.GET.save:
 
         new = request.GET.task.strip()
-        conn = sqlite3.connect('todo.db')
-        c = conn.cursor()
 
         c.execute("INSERT INTO todo (task,status) VALUES (?,?)", (new, 1))
         new_id = c.lastrowid
@@ -76,10 +83,10 @@ def edit_item(no):
         c.execute("SELECT task FROM todo WHERE id LIKE ?", (str(no)))
         cur_data = c.fetchone()
 
-        return template('src/templates/edit_task', old=cur_data, no=no)
+        return template('src/templates/edit_task.tpl', old=cur_data, no=no, root='/src/')
 
 
-@route('/item<item:re:[0-9]+>')
+@route('/item/<item:re:[0-9]+>')
 def show_item(item):
 
         conn = sqlite3.connect('todo.db')
@@ -100,7 +107,7 @@ def help():
     static_file('src/templates/help.html', root='.')
 
 
-@route('/json<json:re:[0-9]+>')
+@route('/json/<json:re:[0-9]+>')
 def show_json(json):
 
     conn = sqlite3.connect('todo.db')

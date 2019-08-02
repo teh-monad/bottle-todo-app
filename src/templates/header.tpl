@@ -6,6 +6,7 @@
   <link type="text/css" href="/src/css/styles.css" rel="stylesheet">
  </head> 
  <body>
+ <div id="app" align="center">
   <header>
     <h1>An bottle TODO App</h1>
   </header>
