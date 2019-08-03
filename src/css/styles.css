@@ -39,3 +39,17 @@ tr > td:first-of-type {
 #app {
 	margin: auto;
 }
+
+ul li {
+    display: inline-block;
+    background: #f5c207;
+    padding: 10px 20px;
+    margin-left: 10px;
+    transform: skew(-20deg);
+}
+
+ul li a {
+    display:inline-block;
+    transform: skew(20deg);
+}
+

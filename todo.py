@@ -32,7 +32,9 @@ def todo_list(c=None):
     result = c.fetchall()
     c.close()
 
-    output = template('src/templates/make_table', rows=result, root='/src/')
+    url = urls()
+
+    output = template('src/templates/make_table', rows=result, url=urls, root='/src/')
     return output
 
 @route('/src/css/<filename:re:.*\.css>')

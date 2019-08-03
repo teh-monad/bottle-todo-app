@@ -1,7 +1,8 @@
 
- Bottle Todo-List Application
- ==================
-Simple example of bottle.py possibilities. That code given from [here]( https://bottlepy.org/docs/dev/tutorial_app.html).
+Bottle Todo-List Application
+==================
+Updated example of TODO application.
+[Original code]( https://bottlepy.org/docs/dev/tutorial_app.html).
 
 Installation
 ============
