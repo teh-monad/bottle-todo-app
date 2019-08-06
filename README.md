@@ -14,5 +14,6 @@ The best way is to install a stable release from PyPI:
 Quick usage guide
 =================
 
+    $ git clone https://github.com/teh-monad/bottle-todo-app
     $ cd bottle-todo-app
     $ python todo.py
