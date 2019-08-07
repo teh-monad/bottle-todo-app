@@ -6,6 +6,14 @@ from bottle import route, run, debug, template, request, static_file, error, red
 # only needed when you run Bottle on mod_wsgi
 from bottle import default_app
 
+import argparse
+
+parser = argparse.ArgumentParser(description='Example: $ todo.py -s 127.0.0.1 -p 8080')
+parser.add_argument('-s', '--server', metavar='{1024..65535}', type=str, default='127.0.0.1')
+parser.add_argument('-p', '--port', metavar='{0..65535}', type=str, default='8080')
+
+args = parser.parse_args()
+
 def connect(func): #func(c=None)
     def _connect(*args,**kw):
         con = sqlite3.connect("todo.db")
@@ -133,8 +141,7 @@ def mistake403(code):
 def mistake404(code):
     return 'Sorry, this page does not exist!'
 
-
 debug(True)
-run(reloader=True)
+run(host=args.server, port=args.port, reloader=True)
 # remember to remove reloader=True and debug(True) when you move your
 # application from development to a productive environment
